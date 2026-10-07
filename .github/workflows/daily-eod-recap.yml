@@ -1,0 +1,23 @@
+name: Rekap Tutup Kasir Harian (23:59 WIB)
+
+on:
+  schedule:
+    # 23:59 WIB (Waktu Indonesia Barat / UTC+7) = 16:59 UTC
+    - cron: '59 16 * * *'
+  workflow_dispatch: # Mengizinkan tes kirim manual dari web GitHub
+
+jobs:
+  daily-recap:
+    name: Kirim Rekap Kasir ke Telegram
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Kode Proyek
+        uses: actions/checkout@v4
+
+      - name: Pasang Node.js Lingkungan Cloud
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Jalankan Pembukuan Harian & Kirim Laporan ke Bot Telegram
+        run: node scripts/cron_daily_eod.js

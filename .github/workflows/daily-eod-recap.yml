@@ -1,9 +1,11 @@
-name: Rekap Tutup Kasir Harian (23:59 WIB)
+name: Rekap Tutup Kasir Harian (23:45 WIB)
 
 on:
   schedule:
-    # 23:59 WIB (Waktu Indonesia Barat / UTC+7) = 16:59 UTC
-    - cron: '59 16 * * *'
+    # 23:45 WIB (16:45 UTC) - Jadwal utama di menit non-peak agar bebas delay antrean GitHub
+    - cron: '45 16 * * *'
+    # 00:05 WIB (17:05 UTC) - Pengaman cadangan jika jadwal pertama sempat tertunda
+    - cron: '5 17 * * *'
   workflow_dispatch: # Mengizinkan tes kirim manual dari web GitHub kapan saja
 
 jobs:
